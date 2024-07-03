@@ -22,3 +22,5 @@ echo 'migrations already created'
 echo 'updating migrations'
 migrate_upgrade
 fi
+
+#bash ./docs/assets/reset_migrations.bash
