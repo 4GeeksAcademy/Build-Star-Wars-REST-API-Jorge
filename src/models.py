@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -10,13 +10,13 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.id
+        return '<Users %r>' % self.id
 
     def serialize(self):
         return {
             "id": self.id,
             "name":self.name,
-            "email": self.email,
+            "email": self.email
             # do not serialize the password, its a security breach
         }
     
@@ -32,7 +32,7 @@ class Personajes(db.Model):
             "id": self.id,
             "name": self.name,
             "eye_color": self.eye_color,
-            "hair_color": self.hair_color,
+            "hair_color": self.hair_color
         }
     
 class Vehiculos(db.Model):
@@ -44,7 +44,7 @@ class Vehiculos(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "model": self.model,
+            "model": self.model
         }
 
 class Planetas(db.Model):
@@ -56,18 +56,41 @@ class Planetas(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "population": self.population,
+            "population": self.population
         }
     
 class Favoritos_personajes(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     personajes_relacion = db.Column(db.Integer, db.ForeignKey(Personajes.id), nullable=False)
-    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
 
     def serialize(self):
         return {
             "id": self.id,
             "personajes_relacion": self.personajes_relacion,
-            "usuarios_relacion": self.usuarios_relacion,
+            "usuarios_relacion": self.usuarios_relacion
         }
     
+class Favoritos_vehiculos(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    vehiculos_relacion = db.Column(db.Integer, db.ForeignKey(Vehiculos.id), nullable=False)
+    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "vehiculos_relacion": self.vehiculos_relacion,
+            "usuarios_relacion": self.usuarios_relacion
+        }
+
+class Favoritos_planetas(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    planetas_relacion = db.Column(db.Integer, db.ForeignKey(Planetas.id), nullable=False)
+    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "planetas_relacion": self.planetas_relacion,
+            "usuarios_relacion": self.usuarios_relacion
+        }
