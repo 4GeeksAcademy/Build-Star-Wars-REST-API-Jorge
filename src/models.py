@@ -20,7 +20,6 @@ class Users(db.Model):
             # do not serialize the password, its a security breach
         }
     
-    
 class Personajes(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(250), nullable=False)
@@ -61,8 +60,8 @@ class Planetas(db.Model):
     
 class Favoritos_personajes(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    personajes_relacion = db.Column(db.Integer, db.ForeignKey(Personajes.id), nullable=False)
-    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
+    personajes_relacion = db.Column(db.Integer, db.ForeignKey(Personajes.id, ondelete='CASCADE'), nullable=False)
+    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id, ondelete='CASCADE'), nullable=False)
 
     def serialize(self):
         return {
@@ -73,8 +72,8 @@ class Favoritos_personajes(db.Model):
     
 class Favoritos_vehiculos(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    vehiculos_relacion = db.Column(db.Integer, db.ForeignKey(Vehiculos.id), nullable=False)
-    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
+    vehiculos_relacion = db.Column(db.Integer, db.ForeignKey(Vehiculos.id, ondelete='CASCADE'), nullable=False)
+    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id, ondelete='CASCADE'), nullable=False)
 
     def serialize(self):
         return {
@@ -85,8 +84,8 @@ class Favoritos_vehiculos(db.Model):
 
 class Favoritos_planetas(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    planetas_relacion = db.Column(db.Integer, db.ForeignKey(Planetas.id), nullable=False)
-    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
+    planetas_relacion = db.Column(db.Integer, db.ForeignKey(Planetas.id, ondelete='CASCADE'), nullable=False)
+    usuarios_relacion = db.Column(db.Integer, db.ForeignKey(Users.id, ondelete='CASCADE'), nullable=False)
 
     def serialize(self):
         return {
